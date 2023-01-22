@@ -15,7 +15,10 @@ class _AppState extends State<App> {
   int counter = 0; // 단순 프로퍼티 not final
 
   void onClicked() {
-    counter = counter + 1;
+    // state 클래스에게 데이터가 변경되었다고 알려주는 함수 (interactive function)
+    setState(() {
+      counter = counter + 1;
+    });
   }
 
   @override
