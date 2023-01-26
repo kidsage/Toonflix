@@ -13,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const twentyFiveMinutes = 1500; // 고정값을 만들어서 값 실수를 줄인다
   int totalSeconds = twentyFiveMinutes;
   bool isRunning = false;
+  bool isStarting = false;
   int totalPomodoros = 0;
   late Timer timer; // property를 사용하기 전에 초기화 한다는 의미(late)
 
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     setState(() {
       isRunning = true;
+      isStarting = true;
     });
   }
 
@@ -46,6 +48,15 @@ class _HomeScreenState extends State<HomeScreen> {
     timer.cancel();
     setState(() {
       isRunning = false;
+    });
+  }
+
+  void onStopPressed() {
+    timer.cancel();
+    setState(() {
+      isRunning = false;
+      isStarting = false;
+      totalSeconds = twentyFiveMinutes;
     });
   }
 
@@ -80,17 +91,30 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Flexible(
             flex: 3,
-            child: Center(
-              child: IconButton(
-                iconSize: 120,
-                color: Theme.of(context).cardColor,
-                onPressed: isRunning ? onPausePressed : onStartPressed,
-                icon: Icon(
-                  isRunning
-                      ? Icons.pause_circle_outline
-                      : Icons.play_circle_outline,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: IconButton(
+                    iconSize: 120,
+                    color: Theme.of(context).cardColor,
+                    onPressed: isRunning ? onPausePressed : onStartPressed,
+                    icon: Icon(
+                      isRunning
+                          ? Icons.pause_circle_outline
+                          : Icons.play_circle_outline,
+                    ),
+                  ),
                 ),
-              ),
+                Center(
+                  child: IconButton(
+                    iconSize: 40,
+                    color: Theme.of(context).cardColor,
+                    onPressed: onStopPressed,
+                    icon: const Icon(Icons.stop_circle_outlined),
+                  ),
+                )
+              ],
             ),
           ),
           Flexible(
