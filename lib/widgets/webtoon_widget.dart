@@ -32,20 +32,24 @@ class Webtoon extends StatelessWidget {
       },
       child: Column(
         children: [
-          Container(
-            width: 200,
-            // 아래 borderradius가 적용이 안되는 것을 적용시켜주는 코드
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 15,
-                    offset: const Offset(10, 10),
-                    color: Colors.black.withOpacity(0.5))
-              ],
+          // detail screen의 이미지와 같이 사용할 수 있도록 만들어주는데, 설명하기가 힘드네;
+          Hero(
+            tag: id,
+            child: Container(
+              width: 200,
+              // 아래 borderradius가 적용이 안되는 것을 적용시켜주는 코드
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 15,
+                      offset: const Offset(10, 10),
+                      color: Colors.black.withOpacity(0.5))
+                ],
+              ),
+              child: Image.network(thumb),
             ),
-            child: Image.network(thumb),
           ),
           const SizedBox(
             height: 10,
