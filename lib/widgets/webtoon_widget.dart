@@ -13,13 +13,14 @@ class Webtoon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 유저 반응에 따라 작동
+    // 유저 반응에 따라 작동 (탭, 드래그, 무브, 줌 등 모두 감지 가능)
     return GestureDetector(
       onTap: () {
         // Push는 statelesswidget을 원하지 않음
         Navigator.push(
           context,
           MaterialPageRoute(
+            // 사실 새로운 widget을 띄우고 있는 형태이다
             builder: (context) => DetailScreen(
               title: title,
               thumb: thumb,

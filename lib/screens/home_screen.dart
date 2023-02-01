@@ -6,6 +6,7 @@ import 'package:toonflix/widgets/webtoon_widget.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   // future data로 모아두기
+  // 별도의 args가 필요 없어서 해당 방법으로 데이터 이니셜라이징이 가능한 것
   final Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToons();
 
   @override

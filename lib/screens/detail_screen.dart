@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:toonflix/models/webtoon_detail_model.dart';
+import 'package:toonflix/models/webtoon_episode_model.dart';
+import 'package:toonflix/services/api_service.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
+  // home_screen 에서 온 데이터
   final String title, thumb, id;
 
   const DetailScreen({
@@ -11,6 +15,25 @@ class DetailScreen extends StatelessWidget {
   });
 
   @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+// statefulwidget으로 바뀌면 데이터를 widget.~ 으로 사용 가능한데, 이는 부모 클래스로 접근하는 코드
+class _DetailScreenState extends State<DetailScreen> {
+  // home_screen과 같은 방법은 id를 먼저 가져올 수 없어서 사용이 불가능하다
+  // 따라서 아래와 같이 이니셜라이징하는 방법으로 사용해야 한다(build 이전에 가져오기 때문)
+  // Future<WebtoonDetailModel> webtoon = ApiService.getToonById(widget.id);
+  late Future<WebtoonDetailModel> webtoon;
+  late Future<List<WebtoonEpisodeModel>> episodes;
+
+  @override
+  void initState() {
+    super.initState();
+    webtoon = ApiService.getToonById(widget.id);
+    episodes = ApiService.getLatestEpisodesById(widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -19,7 +42,7 @@ class DetailScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
         title: Text(
-          title,
+          widget.title,
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w400,
@@ -36,7 +59,7 @@ class DetailScreen extends StatelessWidget {
             children: [
               // webtoon_widget과 연동되는 부분
               Hero(
-                tag: id,
+                tag: widget.id,
                 child: Container(
                   width: 200,
                   clipBehavior: Clip.hardEdge,
@@ -49,7 +72,7 @@ class DetailScreen extends StatelessWidget {
                           color: Colors.black.withOpacity(0.5))
                     ],
                   ),
-                  child: Image.network(thumb),
+                  child: Image.network(widget.thumb),
                 ),
               ),
             ],
