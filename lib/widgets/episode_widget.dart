@@ -17,6 +17,7 @@ class Episode extends StatelessWidget {
     // // future는 async + await 해줘야함
     // await launchUrl(url);
     // 위와 같은 기능
+    // .이 들어가면 {} 필요
     await launchUrlString(
         "https://comic.naver.com/webtoon/detail?titleId=$webtoonId&no=${episode.id}");
   }
